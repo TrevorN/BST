@@ -1,21 +1,21 @@
 public class BST<T extends Comparable<T>>
 {
 
-	priavte BSTnode<T> root
+	private BSTnode<T> root;
 
 	public BST()
 	{
 		root = new BSTnode<T>();
 	}
 
-	public void insert(Comparable<T> datum)
+	public void insert(T datum)
 	{
 		root.insert(datum);
 	}
 
 	public int depth()
 	{
-		root.depth();
+		return root.depth();
 	}
 
 
@@ -36,6 +36,11 @@ public class BST<T extends Comparable<T>>
 
 	public String toString()
 	{
-		return root.toString();
+		return getTree().toString();
+	}
+
+	public void delete(T toDelete)
+	{
+		root.delete(toDelete);
 	}
 }
