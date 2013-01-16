@@ -4,7 +4,8 @@ public class BSTnode<T extends Comparable<T>>
 	private T datum;
 	private BSTnode<T> left;
 	private BSTnode<T> right;
-
+	private int depth = 1;
+	
 	//Constructors
 	public BSTnode(T datum, BSTnode<T> left, BSTnode<T> right)
 	{
@@ -51,19 +52,21 @@ public class BSTnode<T extends Comparable<T>>
 
 	public int depth()
 	{
-		if(isLeaf()) return 1;
+//		if(isLeaf()) return 1;
+//
+//		if(left == null)
+//		{
+//			return right.depth() + 1;
+//		}
+//
+//		if(right == null)
+//		{
+//			return left.depth() + 1;
+//		}
+//
+//		return left.depth() > right.depth() ? left.depth() + 1 : right.depth() + 1;
+		return depth;
 
-		if(left == null)
-		{
-			return right.depth() + 1;
-		}
-
-		if(right == null)
-		{
-			return left.depth() + 1;
-		}
-
-		return left.depth() > right.depth() ? left.depth() + 1 : right.depth() + 1;
 	}
 
 	//Modifiers
@@ -82,7 +85,7 @@ public class BSTnode<T extends Comparable<T>>
 		right = node;
 	}
 
-	public void insert(T datum)
+	public int insert(T datum)
 	{
 		
 		if(this.datum == null)
@@ -91,13 +94,16 @@ public class BSTnode<T extends Comparable<T>>
 		}
 		else if(this.datum.compareTo(datum) == 0)
 		{
-			return;
+
 		}
 		else if(this.datum.compareTo(datum) < 0)
 		{
 			if(right != null)
 			{
-				right.insert(datum);
+				int i = 1 + right.insert(datum);
+				if(i > depth){
+					depth = i;
+				}
 			}else{
 				right = new BSTnode<T>(datum);
 			}
@@ -107,11 +113,16 @@ public class BSTnode<T extends Comparable<T>>
 		{
 			if(left != null)
 			{
-				left.insert(datum);
+				int i = 1 + left.insert(datum);
+				if(i > depth){
+					depth = i;
+				}
 			}else{
 				left = new BSTnode<T>(datum);
 			}
 		}
+
+		return depth;
 	}
 
 	public void delete(T toDelete)
